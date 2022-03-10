@@ -3,6 +3,7 @@ const { nanoid } = require("nanoid");
 
 const leerUrls = async (req, res) => {
     try {
+        // .lean() = js objects, not mongoose objects
         const urls = await Url.find().lean();
         res.render("home", { urls: urls });
     } catch (error) {
@@ -13,7 +14,7 @@ const leerUrls = async (req, res) => {
 
 const agregarUrl = async (req, res) => {
     const { origin } = req.body;
-
+ 
     try {
         const url = new Url({ origin: origin, shortURL: nanoid(8) });
         await url.save();
@@ -28,7 +29,6 @@ const eliminarUrl = async (req, res) => {
     const { id } = req.params;
     try {
         await Url.findByIdAndDelete(id);
-
         res.redirect("/");
     } catch (error) {
         console.log(error);

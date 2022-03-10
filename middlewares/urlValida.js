@@ -1,4 +1,6 @@
+// Modulo nativo de node.js
 const { URL } = require("url");
+
 const urlValidar = (req, res, next) => {
     try {
         const { origin } = req.body;
@@ -18,4 +20,4 @@ const urlValidar = (req, res, next) => {
     }
 };
 
-module.exports = urlValidar;
+module.exports = urlValidar; 
