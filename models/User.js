@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const bcrypt = require("bcryptjs");
-const bcryptjs = require("bcryptjs");
 
 const userSchema = new Schema({
   userName: {
@@ -41,8 +40,17 @@ userSchema.pre("save", async function (next) {
     next();
   } catch (error) {
     console.log(error);
-    next();
+    throw new Error("Error al desencriptar la contraseña");
+    // next();
   }
 });
+
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  try {
+    return await bcrypt.compare(candidatePassword, this.password);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 module.exports = mongoose.model("User", userSchema);
