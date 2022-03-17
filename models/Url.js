@@ -14,6 +14,11 @@ const urlSchema = new Schema({
         required: true,
         // default: nanoid(6),
     },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    }
 });
 
 const Url = mongoose.model("Url", urlSchema);

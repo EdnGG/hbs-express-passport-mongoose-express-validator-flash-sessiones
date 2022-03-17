@@ -1,0 +1,19 @@
+<h1 class="text-center">Username</h1>
+<p class="text-center">Edit profile</p>
+
+<div class="my-5 text-center my-5">
+  <img
+    class="rounded-circle"
+    src="/img/profiles/profile.jpg"
+    alt="profile image"
+  />
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <form action="/profile?_csrf={{csrfToken}}" method="post" enctype="multipart/form-data">
+      <input type="file" class="form-control form-control-sm" id="formFileSm" name="myFile">
+      <button class="text-center btn btn-dark my-4">Change image</button>
+    </form>
+  </div> 
+</div>

@@ -26,6 +26,11 @@ const userSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  imagen: {
+    type: String,
+    default: null,
+    
+  }
 });
 
 userSchema.pre("save", async function (next) {
