@@ -3,7 +3,8 @@ require('dotenv').config();
 
 
 const sendEmail = async (user) => {
-  const transport = await nodemailer.createTransport({
+  console.log('objeto user: ', user)
+  const transport = nodemailer.createTransport({
     host: "smtp.mailtrap.io",
     port: 2525,
     auth: {
