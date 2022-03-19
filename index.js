@@ -1,22 +1,39 @@
 const express = require("express");
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
+const cors = require('cors')
 const passport = require("passport");
+const mongoSanitize = require("express-mongo-sanitize");
 const { create } = require("express-handlebars");
 const csrf = require("csurf");
 
 const User = require("./models/User");
 require("dotenv").config();
-require("./database/db");
+const clientDB = require("./database/db");
 
 const app = express();
 
-app.use(
+const corsOptions = {
+    credentials: true,
+    origin: process.env.PATH_HEROKU || "*",
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+};
+
+app.use(cors(corsOptions));
+
+
+app.use(    
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     name: process.env.SESSION_SECRET_NAME,
+    store: MongoStore.create({
+        clientPromise: clientDB,
+        dbName: process.env.DB_NAME // por defecto agarra el nombre de la DB en mongo
+    }),
+    cookie: { secure: process.env.MODE === 'production' , mxAge:30 * 24 * 60 * 60 * 1000 } // 30 days session storing in mongoAtlas
   })
 );
 
@@ -75,6 +92,7 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
 
 app.use(csrf());
+app.use(mongoSanitize())
 
 // Mandar crsfToken de forma global, tambien manda los mensaje del alert
 app.use((req, res, next) => {
