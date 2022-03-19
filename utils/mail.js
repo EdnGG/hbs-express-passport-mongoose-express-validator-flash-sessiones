@@ -17,7 +17,7 @@ const sendEmail = async (user) => {
     from: '"Fred Foo 👻" <foo@example.com>', // sender address
     to: user.email, // list of receivers
     subject: "Verifica tu cuenta en tu email" ,// Subject line
-    html: `<a href="${ process.env.PATH_HEROKU ||'http://localhost:5000'}/auth/confirm-account/${user.tokenConfirm}">Verifica tu cuenta aqui</a>`, // html body
+    html: `<a href="${ process.env.PATH_HEROKU ||'http://localhost:5000'}auth/confirm-account/${user.tokenConfirm}">Verifica tu cuenta aqui</a>`, // html body
   });
 
 }
